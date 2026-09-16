@@ -26,13 +26,24 @@ public class ClaimsService : IClaimsService
         return await _context.Claims.SingleOrDefaultAsync(claim => claim.Id == id);
     }
 
-    public async Task<Claim> CreateClaimAsync(Claim claim)
+    public async Task<(Claim? Claim, string? Error)> CreateClaimAsync(Claim claim)
     {
+        var cover = await _context.Covers.SingleOrDefaultAsync(c => c.Id == claim.CoverId);
+        if (cover is null)
+        {
+            return (null, $"Cover '{claim.CoverId}' not found.");
+        }
+
+        if (claim.Created.Date < cover.StartDate.Date || claim.Created.Date > cover.EndDate.Date)
+        {
+            return (null, "Claim Created date must fall within the related Cover's period.");
+        }
+
         claim.Id = Guid.NewGuid().ToString();
         _context.Claims.Add(claim);
         await _context.SaveChangesAsync();
         _auditer.AuditClaim(claim.Id, "POST");
-        return claim;
+        return (claim, null);
     }
 
     public async Task<bool> DeleteClaimAsync(string id)

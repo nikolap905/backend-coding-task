@@ -33,8 +33,8 @@ public class ClaimsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Claim>> CreateAsync(Claim claim)
     {
-        var created = await _claimsService.CreateClaimAsync(claim);
-        return Ok(created);
+        var (created, error) = await _claimsService.CreateClaimAsync(claim);
+        return error is not null ? BadRequest(error) : Ok(created);
     }
 
     [HttpDelete("{id}")]

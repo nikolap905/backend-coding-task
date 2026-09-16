@@ -1,11 +1,12 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Claims.Models;
 
 public class Claim
 {
     [BsonId]
-    public string Id { get; set; } = default!;
+    public string? Id { get; set; }
 
     [BsonElement("coverId")]
     public string CoverId { get; set; } = default!;
@@ -20,6 +21,7 @@ public class Claim
     public ClaimType Type { get; set; }
 
     [BsonElement("damageCost")]
+    [Range(0, 100_000)]
     public decimal DamageCost { get; set; }
 }
 

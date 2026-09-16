@@ -1,38 +1,24 @@
-﻿namespace Claims.Auditing
+using System.Threading.Channels;
+
+namespace Claims.Auditing
 {
     public class Auditer
     {
-        private readonly AuditContext _auditContext;
+        private readonly ChannelWriter<AuditEvent> _writer;
 
-        public Auditer(AuditContext auditContext)
+        public Auditer(Channel<AuditEvent> channel)
         {
-            _auditContext = auditContext;
+            _writer = channel.Writer;
         }
 
         public void AuditClaim(string id, string httpRequestType)
         {
-            var claimAudit = new ClaimAudit()
-            {
-                Created = DateTime.Now,
-                HttpRequestType = httpRequestType,
-                ClaimId = id
-            };
-
-            _auditContext.Add(claimAudit);
-            _auditContext.SaveChanges();
+            _writer.TryWrite(new AuditEvent(AuditEntityType.Claim, id, httpRequestType, DateTime.Now));
         }
-        
+
         public void AuditCover(string id, string httpRequestType)
         {
-            var coverAudit = new CoverAudit()
-            {
-                Created = DateTime.Now,
-                HttpRequestType = httpRequestType,
-                CoverId = id
-            };
-
-            _auditContext.Add(coverAudit);
-            _auditContext.SaveChanges();
+            _writer.TryWrite(new AuditEvent(AuditEntityType.Cover, id, httpRequestType, DateTime.Now));
         }
     }
 }

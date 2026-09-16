@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using MongoDB.Driver;
 using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
+using System.Threading.Channels;
 using Testcontainers.MongoDb;
 using Testcontainers.MsSql;
 
@@ -46,7 +47,9 @@ builder.Services.AddDbContext<ClaimsContext>(options =>
 });
 
 builder.Services.AddSingleton<IPremiumCalculator, PremiumCalculator>();
-builder.Services.AddScoped<Auditer>();
+builder.Services.AddSingleton(Channel.CreateUnbounded<AuditEvent>());
+builder.Services.AddHostedService<AuditBackgroundService>();
+builder.Services.AddSingleton<Auditer>();
 builder.Services.AddScoped<IClaimsService, ClaimsService>();
 builder.Services.AddScoped<ICoversService, CoversService>();
 

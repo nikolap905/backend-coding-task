@@ -8,9 +8,9 @@ namespace Claims.Services;
 public class ClaimsService : IClaimsService
 {
     private readonly ClaimsContext _context;
-    private readonly Auditer _auditer;
+    private readonly IAuditer _auditer;
 
-    public ClaimsService(ClaimsContext context, Auditer auditer)
+    public ClaimsService(ClaimsContext context, IAuditer auditer)
     {
         _context = context;
         _auditer = auditer;

@@ -8,10 +8,10 @@ namespace Claims.Services;
 public class CoversService : ICoversService
 {
     private readonly ClaimsContext _context;
-    private readonly Auditer _auditer;
+    private readonly IAuditer _auditer;
     private readonly IPremiumCalculator _premiumCalculator;
 
-    public CoversService(ClaimsContext context, Auditer auditer, IPremiumCalculator premiumCalculator)
+    public CoversService(ClaimsContext context, IAuditer auditer, IPremiumCalculator premiumCalculator)
     {
         _context = context;
         _auditer = auditer;

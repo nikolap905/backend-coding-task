@@ -2,7 +2,7 @@ using System.Threading.Channels;
 
 namespace Claims.Auditing
 {
-    public class Auditer
+    public class Auditer : IAuditer
     {
         private readonly ChannelWriter<AuditEvent> _writer;
 

@@ -49,7 +49,7 @@ builder.Services.AddDbContext<ClaimsContext>(options =>
 builder.Services.AddSingleton<IPremiumCalculator, PremiumCalculator>();
 builder.Services.AddSingleton(Channel.CreateUnbounded<AuditEvent>());
 builder.Services.AddHostedService<AuditBackgroundService>();
-builder.Services.AddSingleton<Auditer>();
+builder.Services.AddSingleton<IAuditer, Auditer>();
 builder.Services.AddScoped<IClaimsService, ClaimsService>();
 builder.Services.AddScoped<ICoversService, CoversService>();
 

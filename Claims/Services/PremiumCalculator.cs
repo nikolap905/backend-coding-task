@@ -4,37 +4,36 @@ namespace Claims.Services;
 
 public class PremiumCalculator : IPremiumCalculator
 {
+    private const decimal BaseDayRate = 1250m;
+    private const int Tier1Days = 30;
+    private const int Tier2Days = 150;
+
     public decimal Calculate(DateTime startDate, DateTime endDate, CoverType coverType)
     {
-        var multiplier = 1.3m;
-        if (coverType == CoverType.Yacht)
+        var totalDays = (endDate.Date - startDate.Date).Days;
+        if (totalDays <= 0)
         {
-            multiplier = 1.1m;
+            return 0m;
         }
 
-        if (coverType == CoverType.PassengerShip)
-        {
-            multiplier = 1.2m;
-        }
+        var dailyRate = GetDailyRate(coverType);
+        var isYacht = coverType == CoverType.Yacht;
 
-        if (coverType == CoverType.Tanker)
-        {
-            multiplier = 1.5m;
-        }
+        var tier1Days = Math.Min(totalDays, Tier1Days);
+        var tier2Days = Math.Min(Math.Max(totalDays - Tier1Days, 0), Tier2Days);
+        var tier3Days = Math.Max(totalDays - Tier1Days - Tier2Days, 0);
 
-        var premiumPerDay = 1250 * multiplier;
-        var insuranceLength = (endDate - startDate).TotalDays;
-        var totalPremium = 0m;
+        var tier2Rate = dailyRate * (isYacht ? 0.95m : 0.98m);
+        var tier3Rate = dailyRate * (isYacht ? 0.92m : 0.97m);
 
-        for (var i = 0; i < insuranceLength; i++)
-        {
-            if (i < 30) totalPremium += premiumPerDay;
-            if (i < 180 && coverType == CoverType.Yacht) totalPremium += premiumPerDay - premiumPerDay * 0.05m;
-            else if (i < 180) totalPremium += premiumPerDay - premiumPerDay * 0.02m;
-            if (i < 365 && coverType != CoverType.Yacht) totalPremium += premiumPerDay - premiumPerDay * 0.03m;
-            else if (i < 365) totalPremium += premiumPerDay - premiumPerDay * 0.08m;
-        }
-
-        return totalPremium;
+        return (tier1Days * dailyRate) + (tier2Days * tier2Rate) + (tier3Days * tier3Rate);
     }
+
+    private static decimal GetDailyRate(CoverType coverType) => coverType switch
+    {
+        CoverType.Yacht => BaseDayRate * 1.1m,
+        CoverType.PassengerShip => BaseDayRate * 1.2m,
+        CoverType.Tanker => BaseDayRate * 1.5m,
+        _ => BaseDayRate * 1.3m
+    };
 }

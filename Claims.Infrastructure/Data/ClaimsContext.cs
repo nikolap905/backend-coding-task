@@ -1,8 +1,8 @@
-using Claims.Models;
+using Claims.Domain;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.EntityFrameworkCore.Extensions;
 
-namespace Claims.Data;
+namespace Claims.Infrastructure.Data;
 
 public class ClaimsContext : DbContext
 {

@@ -1,5 +1,5 @@
-using Claims.Models;
-using Claims.Services;
+using Claims.Application;
+using Claims.Domain;
 using Xunit;
 
 namespace Claims.Tests.Services;

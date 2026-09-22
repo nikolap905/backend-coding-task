@@ -1,9 +1,9 @@
-using Claims.Auditing;
-using Claims.Data;
-using Claims.Models;
+using Claims.Application;
+using Claims.Domain;
+using Claims.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Claims.Services;
+namespace Claims.Infrastructure.Services;
 
 public class CoversService : ICoversService
 {

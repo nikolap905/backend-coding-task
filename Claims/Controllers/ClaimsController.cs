@@ -1,5 +1,5 @@
-using Claims.Models;
-using Claims.Services;
+using Claims.Application;
+using Claims.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Claims.Controllers;

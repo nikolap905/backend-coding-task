@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Claims.Models;
+namespace Claims.Domain;
 
 public class Cover : IValidatableObject
 {
@@ -36,13 +36,4 @@ public class Cover : IValidatableObject
             yield return new ValidationResult("Insurance period cannot exceed 1 year.", new[] { nameof(EndDate) });
         }
     }
-}
-
-public enum CoverType
-{
-    Yacht = 0,
-    PassengerShip = 1,
-    ContainerShip = 2,
-    BulkCarrier = 3,
-    Tanker = 4
 }

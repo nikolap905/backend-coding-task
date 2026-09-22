@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -20,6 +20,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Claims\Claims.csproj" />
+    <ProjectReference Include="..\Claims.Domain\Claims.Domain.csproj" />
+    <ProjectReference Include="..\Claims.Application\Claims.Application.csproj" />
+    <ProjectReference Include="..\Claims.Infrastructure\Claims.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

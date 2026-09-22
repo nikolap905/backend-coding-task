@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Claims.Models;
+namespace Claims.Domain;
 
 public class Claim
 {
@@ -23,12 +23,4 @@ public class Claim
     [BsonElement("damageCost")]
     [Range(0, 100_000)]
     public decimal DamageCost { get; set; }
-}
-
-public enum ClaimType
-{
-    Collision = 0,
-    Grounding = 1,
-    BadWeather = 2,
-    Fire = 3
 }

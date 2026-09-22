@@ -1,6 +1,6 @@
-using Claims.Models;
+using Claims.Domain;
 
-namespace Claims.Services;
+namespace Claims.Application;
 
 public interface IPremiumCalculator
 {

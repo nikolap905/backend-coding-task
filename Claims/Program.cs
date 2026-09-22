@@ -1,6 +1,7 @@
-using Claims.Auditing;
-using Claims.Data;
-using Claims.Services;
+using Claims.Application;
+using Claims.Infrastructure.Auditing;
+using Claims.Infrastructure.Data;
+using Claims.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using MongoDB.Driver;

@@ -1,6 +1,6 @@
-using Claims.Data;
-using Claims.Models;
-using Claims.Services;
+using Claims.Domain;
+using Claims.Infrastructure.Data;
+using Claims.Infrastructure.Services;
 using Claims.Tests.Fakes;
 using Microsoft.EntityFrameworkCore;
 using Xunit;

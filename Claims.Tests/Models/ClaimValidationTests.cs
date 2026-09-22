@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using Claims.Models;
+using Claims.Domain;
 using Xunit;
 
 namespace Claims.Tests.Models;
